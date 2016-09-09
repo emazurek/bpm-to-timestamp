@@ -12,7 +12,6 @@ var timeArrayToFrames = function(arr) {
   return(frames + seconds * 60 + minutes * 60 * 60 + hours * 60 * 60 * 60);
 }
 
-
 var beatToTimestamp = function(bpm, beat, timeStart = [0,0,0,0]) {
   // convert timeStart to frames
   timeStart = timeArrayToFrames(timeStart);
@@ -27,14 +26,29 @@ var beatToTimestamp = function(bpm, beat, timeStart = [0,0,0,0]) {
   return([hours,minutes,seconds,frames]);
 }
 
-var userInputDummy = 60;
+var timestampArrayToText = function(timestamp) {
+  return(timestamp.map(number => ("0" + number).slice(-2)).join(":"));
+}
+
+var dummyBPM = 70;
+var dummyTimeStart = [0,0,0,0];
 var howManyBeatsOut = 300;
 var timeSignature = 4;
 var isMeasure;
 
-for(i in howManyBeatsOut) {
-  isMeasure = i % timeSignature;
-  if(isMeasure) {
-    console.log(beatToTimestamp(bpm = userInputDummy, beat = i));
+var outputList = function() {
+  var textToOutput = "";
+  for(var i = 0; i < howManyBeatsOut; i++) {
+    isMeasure = !(i % timeSignature);
+    if(isMeasure) {
+      var measure = i / timeSignature;
+      textToOutput += "Measure " + measure + " begins at " + 
+        timestampArrayToText(beatToTimestamp(dummyBPM, i)) + "\n";
+    }
   }
+  return(textToOutput);
 }
+
+document.getElementById("submit").addEventListener("click", function(){
+    document.getElementById("output").innerHTML = outputList().replace(/\n/gi, '<br/>');
+});
