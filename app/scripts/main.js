@@ -1,6 +1,11 @@
+var dummyTimeStart = [0,0,0,0];
+var howManyBeatsOut = 300;
+var timeSignature = 4;
+var isMeasure;
+
 var stringTimestampToArray = function(str) {
   // 00:01:03:29 to [0,1,3,29]
-  return(str.split(":").map(number => +number));
+  return(str.split(':').map(number => +number));
 }
 
 var timeArrayToFrames = function(arr) {
@@ -27,28 +32,23 @@ var beatToTimestamp = function(bpm, beat, timeStart = [0,0,0,0]) {
 }
 
 var timestampArrayToText = function(timestamp) {
-  return(timestamp.map(number => ("0" + number).slice(-2)).join(":"));
+  return(timestamp.map(number => ('0' + number).slice(-2)).join(':'));
 }
 
-var dummyBPM = 70;
-var dummyTimeStart = [0,0,0,0];
-var howManyBeatsOut = 300;
-var timeSignature = 4;
-var isMeasure;
-
-var outputList = function() {
-  var textToOutput = "";
+var outputList = function(bpm) {
+  var textToOutput = '', nMeasure = 0;
   for(var i = 0; i < howManyBeatsOut; i++) {
     isMeasure = !(i % timeSignature);
     if(isMeasure) {
       var measure = i / timeSignature;
-      textToOutput += "Measure " + measure + " begins at " + 
-        timestampArrayToText(beatToTimestamp(dummyBPM, i)) + "\n";
+      textToOutput += 'Measure ' + measure + ' begins at ' + 
+        timestampArrayToText(beatToTimestamp(bpm, i)) + '\n';
     }
   }
   return(textToOutput);
 }
 
-document.getElementById("submit").addEventListener("click", function(){
-    document.getElementById("output").innerHTML = outputList().replace(/\n/gi, '<br/>');
+document.getElementById('submit').addEventListener('click', function(){
+    var bpm = document.getElementById('bpm').value;
+    document.getElementById('output').innerHTML = outputList(bpm).replace(/\n/gi, '<br/>');
 });
