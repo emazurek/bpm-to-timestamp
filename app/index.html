@@ -2,9 +2,9 @@
 <html class="no-js" lang="">
   <head>
     <meta charset="utf-8">
-    <meta name="description" content="">
+    <meta name="description" content="A tool enabling precise in/out points for recording and copy/pasting on multitrack recorders.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>front end</title>
+    <title>BPM to Timestamp Converter</title>
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
@@ -27,15 +27,41 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     
-    <div class="container">
+
+        <div id="wrapper">
+  <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>Input BPM: <input id="bpm" name="bpm" value="60"/></li>
+                <li>Beats per measure: <input id="beats-per-measure" value="4"/></li>
+                <li>Separate measures by: <input id="separate-measures-array" value="4"/></li>
+            </ul>
+            <p id="sidebar-info">A tool enabling precise in/out points for recording and copy/pasting on multitrack recorders such as:</p>
+            <ul>
+              <li><a href="https://www.amazon.com/DP-008EX-Portastudio-Portable-Multi-Track-Recorder/dp/B00B9060X6">Tascam DP-008EX</a> (the one I have)</li>
+              <li><a href="https://www.amazon.com/Zoom-R16-Multitrack-Controller-Interface/dp/B002I7TJNW/ref=sr_1_20?s=musical-instruments&ie=UTF8&qid=1473801697&sr=1-20">Zoom R16</a></li>
+              <li><a href="https://www.amazon.com/DP-006-Portastudio-Portable-Multi-Track-Recorder/dp/B00BEGS5NI/ref=sr_1_7?s=musical-instruments&ie=UTF8&qid=1473802396&sr=1-7">Tascam DP-006</a></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+    <div id="page-content-wrapper">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          Input BPM: <input id="bpm" name="bpm" value="60"/>
-          Separate measures by: <input id="separate-measures-array" value="4"/>
+
+          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
           <button id="submit">Submit</button>
         </div>
         <div id="output" class="col-md-12">
         </div>
+    </div>
+    </div>
     </div>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
