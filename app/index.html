@@ -28,39 +28,31 @@
     <![endif]-->
     
 
-        <div id="wrapper">
-  <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
-                <li>Input BPM: <input id="bpm" name="bpm" value="60"/></li>
-                <li>Beats per measure: <input id="beats-per-measure" value="4"/></li>
-                <li>Separate measures by: <input id="separate-measures-array" value="4"/></li>
-            </ul>
-            <p id="sidebar-info">A tool enabling precise in/out points for recording and copy/pasting on multitrack recorders such as:</p>
-            <ul>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+        <h1>BPM to Timestamp Conversion</h1>
+        <p id="sidebar-info">A tool enabling precise in/out points for recording and editing with multitrack recorders and video editing software.<br/>(Assumes musician is playing in tempo.)</p>
+            <!-- <ul>
               <li><a href="https://www.amazon.com/DP-008EX-Portastudio-Portable-Multi-Track-Recorder/dp/B00B9060X6">Tascam DP-008EX</a> (the one I have)</li>
               <li><a href="https://www.amazon.com/Zoom-R16-Multitrack-Controller-Interface/dp/B002I7TJNW/ref=sr_1_20?s=musical-instruments&ie=UTF8&qid=1473801697&sr=1-20">Zoom R16</a></li>
               <li><a href="https://www.amazon.com/DP-006-Portastudio-Portable-Multi-Track-Recorder/dp/B00BEGS5NI/ref=sr_1_7?s=musical-instruments&ie=UTF8&qid=1473802396&sr=1-7">Tascam DP-006</a></li>
+            </ul> -->
+            <h3>Parameters</h3>
+            <ul class="params">
+                <li><label>Input BPM: </label><input id="bpm" name="bpm" value="60"/></li>
+                <li><label>Beats per measure: </label><input id="beats-per-measure" value="4"/></li>
+                <li><label>Separate measures by: </label><input id="separate-measures-array" value="4"/></li>
+                <li><label>Length in measures: </label><input id="length-in-measures" value="52"/></li>
+                <li><label>Offset start by: </label><input id="offset-start" value="00:00:00:00"/></li>
+                <li><label></label><button id="submit">Submit</button></li>
             </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
 
-    <div id="page-content-wrapper">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-
-          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-          <button id="submit">Submit</button>
         </div>
         <div id="output" class="col-md-12">
         </div>
-    </div>
     </div>
     </div>
     

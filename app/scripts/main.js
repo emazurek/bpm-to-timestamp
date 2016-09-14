@@ -1,20 +1,16 @@
-var dummyTimeStart = [0,0,0,0];
-var howManyBeatsOut = 300;
-var timeSignature = 4;
-var isMeasure;
-
 var BpmTimestamp = function(inputObj) {
   this.inputObj = inputObj;
 }
 
 BpmTimestamp.prototype = {
+  
   stringTimestampToArray: function(str) {
     // 00:01:03:29 to [0,1,3,29]
-    return(str.split(':').map(number => +number));
+    return str.split(':').map(number => +number);
   },
 
   timestampArrayToText: function(timestamp) {
-    return(timestamp.map(number => ('0' + number).slice(-2)).join(':'));
+    return timestamp.map(number => ('0' + number).slice(-2)).join(':');
   },
 
   timeArrayToFrames: function(arr) {
@@ -23,7 +19,7 @@ BpmTimestamp.prototype = {
     var seconds = arr[2];
     var minutes = arr[1];
     var hours = arr[0];
-    return(frames + seconds * 60 + minutes * 60 * 60 + hours * 60 * 60 * 60);
+    return frames + seconds * 30 + minutes * 30 * 60 + hours * 30 * 60 * 60;
   },
 
   beatToTimestamp: function(bpm, beat, timeStartArr = [0,0,0,0]) {
@@ -37,19 +33,22 @@ BpmTimestamp.prototype = {
     seconds = seconds % 60;
     minutes = minutes % 60;
     hours = hours;
-    return([hours,minutes,seconds,frames]);
+    return [hours,minutes,seconds,frames];
   },
 
-  makeTimestampsObj: function(bpm, howManyBeatsOut, timeSignature) {
+  makeTimestampsObj: function(bpm, timeSignature, lengthInMeasures, offsetStart) {
     var timestampsOutputObj = {measures: {}};
-    for(var i = 0; i < howManyBeatsOut; i++) {
-      isMeasure = !(i % timeSignature);
+    var isMeasure;
+    var howManyBeatsOut = lengthInMeasures * timeSignature;
+    var offsetStart = this.stringTimestampToArray(offsetStart);
+    for(var beat = 0; beat < howManyBeatsOut; beat++) {
+      isMeasure = !(beat % timeSignature);
       if(isMeasure) {
-        var measure = i / timeSignature;
-        timestampsOutputObj.measures[measure] = {timestamp: this.beatToTimestamp(bpm, i)};
+        var measure = beat / timeSignature;
+        timestampsOutputObj.measures[measure] = {timestamp: this.beatToTimestamp(bpm, beat, offsetStart)};
       }
     }
-    return(timestampsOutputObj);
+    return timestampsOutputObj;
   },
 
   outputListToHTML: function(timestampsOutputObj, lineBreaksArr) {
@@ -68,21 +67,20 @@ BpmTimestamp.prototype = {
       output += '<div class="measure-no">' + (+measure+1) + '</div>' + 
         '<div class="timestamp">' + this.timestampArrayToText(timestampsOutputObj.measures[measure].timestamp) + '</div><br/>';
     }
-    return(output);
+    return output;
   }
 }
 
 document.getElementById('submit').addEventListener('click', function(){
-  var instance = new BpmTimestamp();
-  var bpm = document.getElementById('bpm').value;
-  //var beatsPerMeasure = document.getElementById('beats-per-measure').value;
-  var lineBreaks = document.getElementById('separate-measures-array').value.split(',');
-  var timeSignature = document.getElementById('beats-per-measure').value;
-  var timestampsHTML = instance.outputListToHTML(instance.makeTimestampsObj(bpm, howManyBeatsOut, timeSignature), lineBreaks);
+  //var instance = new BpmTimestamp();
+  var configObj = {
+    bpm: document.getElementById('bpm').value;
+    lineBreaks: document.getElementById('separate-measures-array').value.split(',');
+    timeSignature: document.getElementById('beats-per-measure').value;
+    lengthInMeasures: document.getElementById('length-in-measures').value;
+    offsetStart: document.getElementById('offset-start').value;
+  }
+  var instance = newBpmTimestamp(configObj);
+  var timestampsHTML = instance.outputListToHTML(instance.makeTimestampsObj(bpm, timeSignature, lengthInMeasures, offsetStart), lineBreaks);
   document.getElementById('output').innerHTML = timestampsHTML;
 });
-
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });

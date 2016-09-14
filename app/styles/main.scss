@@ -4,8 +4,6 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-@import "simple-sidebar.scss";
-
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
@@ -36,5 +34,21 @@ $icon-font-path: '../fonts/';
     margin: .1em;
         background-color: black;
     color: #FFF;
+}
 
+label {
+  display: inline-block;
+  width:200px;
+}
+
+.params {
+    list-style-type: none;
+    padding: 0;
+    input {
+      border-width: 0 0 1px 0;
+      &:focus, &:hover {
+        border-color: #000;
+        outline: 0;
+      }
+    }
 }
