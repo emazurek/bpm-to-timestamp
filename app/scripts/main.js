@@ -3,7 +3,7 @@ var BpmTimestamp = function(inputObj) {
 }
 
 BpmTimestamp.prototype = {
-  
+
   stringTimestampToArray: function(str) {
     // 00:01:03:29 to [0,1,3,29]
     return str.split(':').map(number => +number);
@@ -36,7 +36,11 @@ BpmTimestamp.prototype = {
     return [hours,minutes,seconds,frames];
   },
 
-  makeTimestampsObj: function(bpm, timeSignature, lengthInMeasures, offsetStart) {
+  makeTimestampsObj: function(paramsObj) {
+    var bpm = paramsObj.bpm;
+    var timeSignature = paramsObj.timeSignature;
+    var lengthInMeasures = paramsObj.lengthInMeasures;
+    var offsetStart = paramsObj.offsetStart;
     var timestampsOutputObj = {measures: {}};
     var isMeasure;
     var howManyBeatsOut = lengthInMeasures * timeSignature;
@@ -68,19 +72,22 @@ BpmTimestamp.prototype = {
         '<div class="timestamp">' + this.timestampArrayToText(timestampsOutputObj.measures[measure].timestamp) + '</div><br/>';
     }
     return output;
+  },
+
+  doTheWork: function() {
+    return this.outputListToHTML(this.makeTimestampsObj(this.inputObj), this.inputObj.lineBreaks);
   }
 }
 
 document.getElementById('submit').addEventListener('click', function(){
-  //var instance = new BpmTimestamp();
-  var configObj = {
-    bpm: document.getElementById('bpm').value;
-    lineBreaks: document.getElementById('separate-measures-array').value.split(',');
-    timeSignature: document.getElementById('beats-per-measure').value;
-    lengthInMeasures: document.getElementById('length-in-measures').value;
-    offsetStart: document.getElementById('offset-start').value;
+  var paramsObj = {
+    bpm: document.getElementById('bpm').value,
+    lineBreaks: document.getElementById('separate-measures-array').value.split(','),
+    timeSignature: document.getElementById('beats-per-measure').value,
+    lengthInMeasures: document.getElementById('length-in-measures').value,
+    offsetStart: document.getElementById('offset-start').value
   }
-  var instance = newBpmTimestamp(configObj);
-  var timestampsHTML = instance.outputListToHTML(instance.makeTimestampsObj(bpm, timeSignature, lengthInMeasures, offsetStart), lineBreaks);
+  var instance = new BpmTimestamp(paramsObj);
+  var timestampsHTML = instance.doTheWork();
   document.getElementById('output').innerHTML = timestampsHTML;
 });
